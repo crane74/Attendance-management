@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  # NextJS
+  frontend:
+    environment:
+      - NODE_ENV=${NODE_ENV}
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${WEB_PORT}:3000
+    volumes:
+      - ./frontend/:/usr/src/app/
+
+    # command: bash -c "npm run dev"
+
+    stdin_open: true
+    tty: true
+
+  backend:
+    environment:
+      - NODE_ENV=${NODE_ENV}
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ./backend:/usr/src/app
+
+    ports:
+      - 8080:8080
+
+    # command: bash -c "npm run start:dev"
+
+    stdin_open: true
+    tty: true
